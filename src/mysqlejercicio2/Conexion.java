@@ -16,6 +16,7 @@ public class Conexion {
     public Connection conectar(){
         final String ROJO = "\033[31;1m";
         final String VERDE = "\033[32m";
+        final String RESET = "\033[0m";
         Connection con=null;
         
         try{            
@@ -24,10 +25,10 @@ public class Conexion {
             String user="root";
             String pass="";
             con = DriverManager.getConnection(url, user, pass);
-            System.out.println(VERDE+"\tConexión establecida\n\n");
+            System.out.println(VERDE+"\tConexión establecida\n\n"+RESET);
         }
         catch(Exception ex){            
-            System.out.println(ROJO+ex.getMessage());
+            System.out.println(ROJO+ex.getMessage()+RESET);
         }
         
        return con; 

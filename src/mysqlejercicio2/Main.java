@@ -88,8 +88,9 @@ public class Main {
             } while (!entryOk);
 
             //ACTUALIZACION
-            stmt = con.prepareStatement("UPDATE categorias SET Descripcion=\'" + categoria.getDescripcion() + "\' WHERE IdCategoria=?");
-            stmt.setInt(1, categoria.getId());
+            stmt = con.prepareStatement("UPDATE categorias SET Descripcion=? WHERE IdCategoria=?");
+            stmt.setString(1, categoria.getDescripcion());
+            stmt.setInt(2, categoria.getId());
             //stmt.executeUpdate();
             retorno = stmt.executeUpdate();
 
