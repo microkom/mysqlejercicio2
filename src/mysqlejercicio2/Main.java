@@ -26,7 +26,7 @@ public class Main {
         final String VERDE = "\033[32m";
         final String AZUL = "\033[34m";
         final String BOLD = "\033[4m";
-        
+
         String leftAlignFormat = "\t|                %-20s                   |";
 
         Scanner sc = new Scanner(System.in);
@@ -44,7 +44,7 @@ public class Main {
 
         try {
             con = login.conectar();
-            
+
             System.out.println("\t" + line(60, "-"));
             String textoAux = String.format(leftAlignFormat, "REGISTRO DE CATEGORIAS ");
             System.out.println(textoAux);
@@ -59,14 +59,33 @@ public class Main {
                         Exception error1 = new Exception("Debe ser mayor que cero");
                         throw error1;
                     }
+
+                    //CONSULTA DE LOS DATOS INSERTADOS
+                    stmt = con.prepareStatement("SELECT * FROM Categorias WHERE idCategoria=?");
+
+                    stmt.setInt(1, categoria.getId());
+                    ResultSet rs = stmt.executeQuery();
+                    if (!(rs.next())) {
+                        entryOk = false;
+                        Exception errorStmt = new Exception(ROJO+"Esa categoria no existe"+RESET);
+                        throw errorStmt;
+                    }
+
+                    while (rs.next()) {
+                        System.out.println("\tnnn" + rs.getInt(1) + " " + rs.getString(2) + " \t" + rs.getString(3));
+                    }
+                    if (rs != null) {
+                        rs.close();
+                    }
                     entryOk = true;
+
                 } catch (NumberFormatException err) {
                     System.out.println("\tDato ingresado no válido. " + err.getMessage());
                     entryOk = false;
                 } catch (Exception err) {
                     System.out.println("\tDato ingresado no válido. " + err.getMessage());
                     entryOk = false;
-                }
+                } 
 
             } while (!entryOk);
 
